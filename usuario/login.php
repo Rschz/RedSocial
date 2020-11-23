@@ -6,6 +6,10 @@ require_once('../conexion/db_conexion.php');
 require_once('./Usuario.php');
 require_once('./Service.php');
 
+if (isset($_SESSION['user'])) {
+	header("Location:..");
+}
+
 $servicios = new UserService('../conexion');
 $msg = "";
 $msgAuth = isset($_SESSION['msgAuth']) ? $_SESSION['msgAuth']:NULL;
