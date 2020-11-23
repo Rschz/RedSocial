@@ -1,16 +1,19 @@
 <?php
-
+require_once(realpath(__DIR__ . '/../helpers/auth.php'));
 class Layout
 {
     public $PAGE_TITLE;
     public $CURRENT_PAGE;
     public $DESC_PAGE;
     private $css;
+    private $User;
 
     private $RELATIVE_ROOT_DIR;
     function __construct()
     {
         $this->PageConf();
+        $this->User = isset($_SESSION['user']) ? json_decode($_SESSION['user']): new stdClass();
+
     }
 
     private function PageConf()
@@ -80,7 +83,7 @@ class Layout
               <a class="nav-link" href="{$this->RELATIVE_ROOT_DIR}amigo/amigos.php">Amigos</a>
             </li>
           </ul>
-          <div class="text-light"><b>Usuario</b> <a href="{$this->RELATIVE_ROOT_DIR}usuario/login.php" class="badge badge-dark">Iniciar Sesión</a></div>
+          <div class="text-light"><b>{$this->User->Usuario}</b> <a href="{$this->RELATIVE_ROOT_DIR}usuario/logout.php" class="badge badge-dark">Cerrar Sesión</a></div>
         </div>
       </nav>
         </header>

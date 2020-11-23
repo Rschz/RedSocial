@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('./../layout/Layout.php');
 require_once('./../helpers/JsonHandler.php');
 require_once('../conexion/db_conexion.php');
@@ -7,11 +6,9 @@ require_once('./Usuario.php');
 require_once('./Service.php');
 
 $servicios = new UserService('../conexion');
+$msg = "";
 
-$tmpUser = isset($_SESSION['tmpUser']) ? json_decode($_SESSION['tmpUser']) : "";
-$tmpMsg = isset($_SESSION['tmpMsg']) ? $_SESSION['tmpMsg'] : "";
-//print_r($tmpUser);
-//session_destroy();
+$tmpUser = new stdClass();
 
 
 //Agrega
@@ -27,15 +24,17 @@ if (isset($_POST['submit'])) {
     );
     if (!($_POST['contras'] === $_POST['confir-contras'])) {
 
-        $_SESSION['tmpUser'] = json_encode($user);
-        $_SESSION['tmpMsg'] = 'Contraseñas no coinciden';
-        header("Location:form_usuario.php");
+        $tmpUser = $user;
+        $msg = 'Contraseñas no coinciden';
+    }else{
+        $servicios->Add($user);
+        session_destroy();
+        header("Location:login.php");
         exit();
+
     }
 
-    $servicios->Add($user);
-    header("Location:../login.php");
-    exit();
+
 }
 
 $layout = new Layout();
@@ -44,9 +43,9 @@ $layout->PrintTopPage();
 ?>
 
 <main role="main">
-    <?php if (!empty($tmpMsg)) : ?>
+    <?php if (!empty($msg)) : ?>
         <div class="alert alert-danger" role="alert">
-            <?= $tmpMsg; ?>
+            <?= $msg; ?>
         </div>
     <?php endif ?>
     <div class="py-5 bg-light">

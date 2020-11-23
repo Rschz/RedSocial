@@ -21,7 +21,20 @@ class UserService implements IService
         if ($resul->num_rows === 0) {
             return false;
         }else{
-            
+            $row = $resul->fetch_object();
+            $user = new Usuario(
+                $row->id,
+                "",
+                "",
+                "",
+                "",
+                $row->usuario,
+                ""
+            );
+
+            return $user;
+
+            $stmt->close();
 
         }
         $stmt->close();
