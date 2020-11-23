@@ -35,7 +35,12 @@ class PublicacionService implements IServicePublicacion
 
     public function Add($obj)
     {
+        $stmt = $this->Context->Db->prepare("INSERT INTO `publicaciones`(`fecha`, `contenido`, `usuario_id`)
+            VALUES (?,?,?)");
 
+        $stmt->bind_param('sss', $obj->Fecha, $obj->Contenido, $obj->Usuario);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function Update($obj)

@@ -12,11 +12,15 @@ $servicios = new PublicacionService('conexion');
 $logged = json_decode($_SESSION['user']);
 $publicaciones = $servicios->GetAll($logged->Id);
 
-print_r($publicaciones);
-
 //Elimina
 if (isset($_GET['id'])) {
     $servicios->Delete($_GET['id']);
+    header('Location:index.php');
+}
+
+if (isset($_POST['submit'])) {
+    $publicacion = new Publicacion('', date("d/m/Y h:i:s a"), $_POST['new-publish'], $logged->Id);
+    $servicios->Add($publicacion);
     header('Location:index.php');
 }
 
@@ -57,14 +61,14 @@ $layout->PrintHeader();
                         <div class="col">
                             <div class="card mb-4 shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?=$logged->Usuario;?></h5>
-                                    <p class="card-text"><?=$publicacion->Contenido;?></p>
+                                    <h5 class="card-title"><?= $logged->Usuario; ?></h5>
+                                    <p class="card-text"><?= $publicacion->Contenido; ?></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
                                             <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
                                         </div>
-                                        <small class="text-muted"><?=$publicacion->Fecha;?></small>
+                                        <small class="text-muted"><?= $publicacion->Fecha; ?></small>
                                     </div>
                                 </div>
                             </div>
