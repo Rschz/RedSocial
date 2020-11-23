@@ -44,6 +44,11 @@ class PublicacionService implements IServicePublicacion
 
     public function Update($obj)
     {
+        $stmt = $this->Context->Db->prepare("UPDATE `publicaciones` SET `contenido`= ? WHERE id = ?");
+
+        $stmt->bind_param('ss', $obj->Contenido, $obj->Id);
+        $stmt->execute();
+        $stmt->close();
     }
 
     public function Delete($id)

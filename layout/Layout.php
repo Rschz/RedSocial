@@ -105,6 +105,7 @@ EOF;
             </footer>
             <script src="{$this->RELATIVE_ROOT_DIR}assets/js/jquery-3.5.1.min.js"></script>
             <script src="{$this->RELATIVE_ROOT_DIR}assets/js/bootstrap.min.js"></script>
+            <script src="{$this->RELATIVE_ROOT_DIR}assets/js/main.js"></script>
         </body>
     </html>
     EOF;
