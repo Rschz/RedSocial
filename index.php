@@ -66,7 +66,7 @@ $layout->PrintHeader();
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
-                                            <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                            <a href="index.php?id=<?=$publicacion->Id;?>" type="button" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar registro?');">Eliminar</a>
                                         </div>
                                         <small class="text-muted"><?= $publicacion->Fecha; ?></small>
                                     </div>

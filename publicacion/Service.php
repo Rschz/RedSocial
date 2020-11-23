@@ -19,18 +19,17 @@ class PublicacionService implements IServicePublicacion
 
         if ($resul->num_rows === 0) {
             return $publicaciones;
-        }else{
+        } else {
             while ($row = $resul->fetch_object()) {
-                $publicaciones[] = new Publicacion($row->id,$row->fecha,$row->contenido,$row->usuario_id);
+                $publicaciones[] = new Publicacion($row->id, $row->fecha, $row->contenido, $row->usuario_id);
             }
             return $publicaciones;
         }
-        $stmt->close(); 
+        $stmt->close();
     }
 
     public function GetById($id)
     {
-
     }
 
     public function Add($obj)
@@ -45,12 +44,14 @@ class PublicacionService implements IServicePublicacion
 
     public function Update($obj)
     {
-
     }
 
     public function Delete($id)
     {
+        $stmt = $this->Context->Db->prepare("DELETE FROM `publicaciones` WHERE id = ?");
 
+        $stmt->bind_param('s', $id);
+        $stmt->execute();
+        $stmt->close();
     }
-
 }
