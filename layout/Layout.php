@@ -1,5 +1,4 @@
 <?php
-require_once(realpath(__DIR__ . '/../helpers/auth.php'));
 class Layout
 {
     public $PAGE_TITLE;

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('./../layout/Layout.php');
 require_once('./../helpers/JsonHandler.php');
 require_once('../conexion/db_conexion.php');
@@ -7,6 +8,8 @@ require_once('./Service.php');
 
 $servicios = new UserService('../conexion');
 $msg = "";
+$msgAuth = isset($_SESSION['msgAuth']) ? $_SESSION['msgAuth']:NULL;
+unset($_SESSION['msgAuth']);
 
 //Agrega
 if (isset($_POST['submit'])) {
@@ -14,7 +17,7 @@ if (isset($_POST['submit'])) {
 
 	if ($rs) {
 		$_SESSION['user'] = json_encode($rs);
-		header("Location:../login.php");
+		header("Location:../index.php");
 		exit();
 	} else {
 		$msg = "Datos invalidos o usuario no existe";
@@ -31,6 +34,11 @@ $layout->PrintTopPage();
 	<?php if (!empty($msg)) : ?>
 		<div class="alert alert-danger" role="alert">
 			<?= $msg; ?>
+		</div>
+	<?php endif ?>
+	<?php if (isset($msgAuth)) : ?>
+		<div class="alert alert-warning" role="alert">
+			<?=$msgAuth; ?>
 		</div>
 	<?php endif ?>
 

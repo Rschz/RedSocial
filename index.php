@@ -1,4 +1,5 @@
 <?php
+require_once('helpers/auth.php');
 require_once('layout/Layout.php');
 require_once('publicacion/Publicacion.php');
 require_once('helpers/JsonHandler.php');
