@@ -17,10 +17,10 @@ unset($_SESSION['msgAuth']);
 
 //Agrega
 if (isset($_POST['submit'])) {
-	$rs = $servicios->Login($_POST['inputUser'], $_POST['inputPassword']);
+	$user = $servicios->Login($_POST['inputUser'], $_POST['inputPassword']);
 
-	if ($rs) {
-		$_SESSION['user'] = json_encode($rs);
+	if ($user) {
+		$_SESSION['user'] = json_encode($user);
 		header("Location:../index.php");
 		exit();
 	} else {

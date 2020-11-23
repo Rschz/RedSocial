@@ -1,24 +1,31 @@
 <?php
-require_once('IService.php');
-
-class PublicacionService implements IService
+class PublicacionService implements IServicePublicacion
 {
-    private $Db;
+    private $Context;
 
     public function __construct($dir)
     {
-        $this->Db = new Conexion($dir);
+        $this->Context = new Conexion($dir);
     }
 
-
-    public function GetLastId()
+    public function GetAll($userId)
     {
+        $publicaciones = array();
+        $stmt = $this->Context->Db->prepare("SELECT * FROM `publicaciones` WHERE usuario_id = ?");
+        $stmt->bind_param('s', $userId);
+        $stmt->execute();
 
-    }
+        $resul = $stmt->get_result();
 
-    public function GetAll()
-    {
-
+        if ($resul->num_rows === 0) {
+            return $publicaciones;
+        }else{
+            while ($row = $resul->fetch_object()) {
+                $publicaciones[] = new Publicacion($row->id,$row->fecha,$row->contenido,$row->usuario_id);
+            }
+            return $publicaciones;
+        }
+        $stmt->close(); 
     }
 
     public function GetById($id)

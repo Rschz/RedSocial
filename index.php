@@ -1,6 +1,7 @@
 <?php
 require_once('helpers/auth.php');
 require_once('layout/Layout.php');
+require_once('publicacion/IService.php');
 require_once('publicacion/Publicacion.php');
 require_once('helpers/JsonHandler.php');
 require_once('conexion/db_conexion.php');
@@ -8,8 +9,10 @@ require_once('publicacion/Service.php');
 
 $layout = new Layout();
 $servicios = new PublicacionService('conexion');
-$publicaciones = $servicios->GetAll();
+$logged = json_decode($_SESSION['user']);
+$publicaciones = $servicios->GetAll($logged->Id);
 
+print_r($publicaciones);
 
 //Elimina
 if (isset($_GET['id'])) {
@@ -30,7 +33,7 @@ $layout->PrintHeader();
         </div>
     </section>
     <div class="py-5 bg-light">
-        <div class="container">
+        <div class="container text-left">
             <form method="POST" action="index.php">
                 <div class="row my-3">
                     <div class="col">
@@ -42,23 +45,33 @@ $layout->PrintHeader();
                 </div>
             </form>
 
-            <div class="row">
-                <div class="col">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">UsuarioPrueba</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
+            <?php if (empty($publicaciones)) : ?>
+                <div class="row">
+                    <div class="col text-center">
+                        NO HAY REGISTROS
+                    </div>
+                </div>
+            <?php else : ?>
+                <?php foreach ($publicaciones as $publicacion) : ?>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?=$logged->Usuario;?></h5>
+                                    <p class="card-text"><?=$publicacion->Contenido;?></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                        </div>
+                                        <small class="text-muted"><?=$publicacion->Fecha;?></small>
+                                    </div>
                                 </div>
-                                <small class="text-muted">9 mins</small>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </main>
