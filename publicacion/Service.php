@@ -11,7 +11,7 @@ class PublicacionService implements IServicePublicacion
     public function GetAll($userId)
     {
         $publicaciones = array();
-        $stmt = $this->Context->Db->prepare("SELECT * FROM `publicaciones` WHERE usuario_id = ?");
+        $stmt = $this->Context->Db->prepare("SELECT * FROM `publicaciones` WHERE usuario_id = ? ORDER BY id DESC");
         $stmt->bind_param('s', $userId);
         $stmt->execute();
 
