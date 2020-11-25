@@ -43,10 +43,12 @@ class UserService implements IService
     public function GetAll()
     {
     }
-
+    
     public function GetById($id)
     {
+        
     }
+    
 
     public function Add($obj)
     {

@@ -4,15 +4,15 @@ class Layout
     public $PAGE_TITLE;
     public $CURRENT_PAGE;
     public $DESC_PAGE;
-    private $css;
+    private $css = "";
     private $User;
+    private $ActivePage = "";
 
     private $RELATIVE_ROOT_DIR;
     function __construct()
     {
         $this->PageConf();
-        $this->User = isset($_SESSION['user']) ? json_decode($_SESSION['user']): new stdClass();
-
+        $this->User = isset($_SESSION['user']) ? json_decode($_SESSION['user']) : new stdClass();
     }
 
     private function PageConf()
@@ -20,24 +20,30 @@ class Layout
         switch (basename($_SERVER["SCRIPT_NAME"])) {
             case "login.php":
                 $this->RELATIVE_ROOT_DIR = "../";
-                $this->CURRENT_PAGE = "Inicio de sesión";
+                $this->CURRENT_PAGE = "login";
                 $this->DESC_PAGE = "Ingrese sus credenciales para continuar";
-                $this->PAGE_TITLE = "SocialNET - Formulario para inicio de sesión";
-                $this->css = '<link rel="stylesheet" type="text/css" href="'.$this->RELATIVE_ROOT_DIR.'assets/css/login.css">';
-
+                $this->PAGE_TITLE = "Inicio de sesión";
+                $this->css = '<link rel="stylesheet" type="text/css" href="' . $this->RELATIVE_ROOT_DIR . 'assets/css/login.css">';
                 break;
             case "form_usuario.php":
                 $this->RELATIVE_ROOT_DIR = "../";
-                $this->CURRENT_PAGE = "Registro de usuario";
+                $this->CURRENT_PAGE = "form_usuario";
                 $this->DESC_PAGE = "Registrate llenando este formulario";
-                $this->PAGE_TITLE = "SocialNET - Formulario el registro de nuevo usuario";
+                $this->PAGE_TITLE = "Registro de usuario";
+                break;
+            case "amigos.php":
+                $this->RELATIVE_ROOT_DIR = "../";
+                $this->CURRENT_PAGE = "amigos";
+                $this->DESC_PAGE = "Aqui veo la actividad de mis amigos y los gestiono";
+                $this->PAGE_TITLE = "Mis Amigos";
+                $this->ActivePage = "active";
                 break;
             default:
                 $this->RELATIVE_ROOT_DIR = "";
-                $this->CURRENT_PAGE = "Mis Publicaciones";
+                $this->CURRENT_PAGE = "index";
                 $this->DESC_PAGE = "Publicaciones que he realizado.";
-                $this->PAGE_TITLE = "SocialNET - Pagina princial esta red social";
-                $this->css = "";
+                $this->PAGE_TITLE = "Mis Publicaciones";
+                $this->ActivePage = "active";
         }
     }
 
@@ -75,11 +81,11 @@ class Layout
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <a class="navbar-brand" href="{$this->RELATIVE_ROOT_DIR}index.php">SocialNET</a>
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="{$this->RELATIVE_ROOT_DIR}index.php">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{$this->RELATIVE_ROOT_DIR}amigo/amigos.php">Amigos</a>
+              <a class="nav-link" href="{$this->RELATIVE_ROOT_DIR}publicacion/amigos.php">Amigos</a>
             </li>
           </ul>
           <div class="text-light"><b>{$this->User->Usuario}</b> <a href="{$this->RELATIVE_ROOT_DIR}usuario/logout.php" class="badge badge-dark">Cerrar Sesión</a></div>

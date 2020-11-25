@@ -28,6 +28,28 @@ class PublicacionService implements IServicePublicacion
         $stmt->close();
     }
 
+    public function GetAllFromFriends($userId)
+    {
+        $publicaciones = array();
+        $stmt = $this->Context->Db->prepare("SELECT * from publicaciones WHERE usuario_id IN (SELECT amigo_id from amigos WHERE usuario_id = ?)
+        ORDER BY id DESC");
+        $stmt->bind_param('s', $userId);
+        $stmt->execute();
+
+        $resul = $stmt->get_result();
+
+        if ($resul->num_rows === 0) {
+            return $publicaciones;
+        } else {
+            while ($row = $resul->fetch_object()) {
+                $publicaciones[] = new Publicacion($row->id, $row->fecha, $row->contenido, $row->usuario_id);
+            }
+            return $publicaciones;
+        }
+        $stmt->close();
+    }
+    
+
     public function GetById($id)
     {
     }

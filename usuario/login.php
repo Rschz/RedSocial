@@ -47,7 +47,7 @@ $layout->PrintTopPage();
 	<?php endif ?>
 
 	<img class="mb-4" src="../assets/img/df.svg" alt="" width="100" height="100">
-	<h3 class="mb-3 font-weight-normal"><?= $layout->CURRENT_PAGE; ?></h3>
+	<h3 class="mb-3 font-weight-normal"><?= $layout->PAGE_TITLE; ?></h3>
 	<p class="h6 text-muted"><?= $layout->DESC_PAGE; ?></p>
 	<label for="inputUser" class="sr-only">Usuario</label>
 	<input type="text" id="inputUser" name="inputUser" class="form-control" placeholder="Usuario" required="" autofocus="">

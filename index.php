@@ -40,7 +40,7 @@ $layout->PrintHeader();
 <main role="main">
     <section class="jumbotron text-center mb-0">
         <div class="container">
-            <h1 class="display-4"><?= $layout->CURRENT_PAGE; ?></h1>
+            <h1 class="display-4"><?= $layout->PAGE_TITLE; ?></h1>
             <p class="lead"><?= $layout->DESC_PAGE; ?></p>
         </div>
     </section>

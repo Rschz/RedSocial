@@ -53,7 +53,7 @@ $layout->PrintTopPage();
             <img class="mb-4" src="../assets/img/df.svg" alt="" width="100" height="100">
             <form method="POST" action="form_usuario.php">
                 <input type="hidden" name="id" value="0">
-                <h3 class="mb-3 font-weight-normal"><?= $layout->CURRENT_PAGE; ?></h3>
+                <h3 class="mb-3 font-weight-normal"><?= $layout->PAGE_TITLE; ?></h3>
                 <p class="h6 text-muted"><?= $layout->DESC_PAGE; ?></p>
                 <div class="row">
                     <div class="col-md-6 mb-3">
