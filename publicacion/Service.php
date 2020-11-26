@@ -31,9 +31,8 @@ class PublicacionService implements IServicePublicacion
     public function GetAllFromFriends($userId)
     {
         $publicaciones = array();
-        $stmt = $this->Context->Db->prepare("SELECT * from publicaciones WHERE usuario_id IN (SELECT amigo_id from amigos WHERE usuario_id = ?)
-        ORDER BY id DESC");
-        $stmt->bind_param('s', $userId);
+        $stmt = $this->Context->Db->prepare("SELECT p.*, u.usuario from publicaciones p INNER JOIN users u ON p.usuario_id = u.id WHERE usuario_id IN (SELECT amigo_id from amigos WHERE usuario_id = ?) OR usuario_id IN (SELECT usuario_id from amigos WHERE amigo_id = ?) ORDER BY id DESC");
+        $stmt->bind_param('ss', $userId, $userId);
         $stmt->execute();
 
         $resul = $stmt->get_result();
@@ -42,7 +41,7 @@ class PublicacionService implements IServicePublicacion
             return $publicaciones;
         } else {
             while ($row = $resul->fetch_object()) {
-                $publicaciones[] = new Publicacion($row->id, $row->fecha, $row->contenido, $row->usuario_id);
+                $publicaciones[] = new Publicacion($row->id, $row->fecha, $row->contenido, $row->usuario);
             }
             return $publicaciones;
         }

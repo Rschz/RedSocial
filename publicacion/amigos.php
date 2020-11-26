@@ -23,11 +23,11 @@ if (isset($_GET['id'])) {
     $amigoService->Delete($logged->Id, $userFriendId);
     header('Location:amigos.php');
 }
-//Agrega
-if (isset($_POST['submit'])) {
-    $publicacion = new Publicacion('', date("d/m/Y h:i:s a"), $_POST['new-publish'], $logged->Id);
-    $servicios->Add($publicacion);
-    header('Location:index.php');
+//Agrega amigo
+if (isset($_POST['add-friend'])) {
+    $amigoUser = $_POST['friend-user'];
+    $amigoService->Add($logged->Id,$amigoUser);
+    header('Location:amigos.php');
 }
 //Edita
 if (isset($_POST['edit'])) {
@@ -65,13 +65,9 @@ $layout->PrintHeader();
                                 <div class="col">
                                     <div class="card mb-4 shadow-sm">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?= $logged->Usuario; ?></h5>
+                                            <h5 class="card-title"><?= $publicacion->Usuario; ?></h5>
                                             <p class="card-text"><?= $publicacion->Contenido; ?></p>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#staticBackdrop" data-whatever="<?= $publicacion->Contenido; ?>" data-id="<?= $publicacion->Id; ?>">Editar</button>
-                                                    <a href="index.php?id=<?= $publicacion->Id; ?>" type="button" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Eliminar registro?');">Eliminar</a>
-                                                </div>
                                                 <small class="text-muted"><?= $publicacion->Fecha; ?></small>
                                             </div>
                                         </div>
@@ -111,7 +107,7 @@ $layout->PrintHeader();
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="amigo.php" method="post">
+            <form action="amigos.php" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Agregar nuevo amigo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -119,11 +115,12 @@ $layout->PrintHeader();
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input id="edited-publish" name="edited-publish" type="text" class="form-control" placeholder="Usuario de amigo" required>
+                    <input id="friend-user" name="friend-user" type="text" class="form-control" placeholder="Usuario de amigo" required>
+                    <div class="invalid-feedback">Indroducir valor valido.</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="edit" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" id="add-friend" name="add-friend" class="btn btn-primary">Aceptar</button>
                 </div>
             </form>
         </div>

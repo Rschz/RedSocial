@@ -1,5 +1,5 @@
 $(function () {
-  console.log("ready!");
+  console.log("Ready!");
 
   //Aplica clase active al menu nav
   try {
@@ -11,6 +11,7 @@ $(function () {
     }
   } catch (error) {}
 
+  //Modal dinamico
   $("#staticBackdrop").on("show.bs.modal", function (event) {
     var button = $(event.relatedTarget);
     var content = button.data("whatever");
@@ -19,4 +20,17 @@ $(function () {
     modal.find(".modal-body input#edited-publish").val(content);
     modal.find(".modal-body input#id-publish").val(id);
   });
+
+  //Valida que el usuario del amigo agregar tenga valor antes de enviar
+  $('#add-friend').click(function (e) { 
+    if (!$('#friend-user').val().trim()) {
+      $('.modal-body div').show();
+      e.preventDefault();
+    }
+    
+  });
+
+
+
+
 });
